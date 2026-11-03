@@ -143,7 +143,12 @@ describe('ReactDOMServerIntegration / attributes', () => {
 
     itRenders('no className prop with null value', async (render) => {
       const e = (await render(<div className={null as any} />)) as HTMLElement
-      expect(e.hasAttribute('className')).toBe(false)
+      expect(e.hasAttribute('class')).toBe(false)
+    })
+
+    itRenders('no className prop with undefined value', async (render) => {
+      const e = (await render(<div className={undefined} />)) as HTMLElement
+      expect(e.hasAttribute('class')).toBe(false)
     })
 
     itRenders('className prop when given the alias', async (render) => {

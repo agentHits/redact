@@ -42,9 +42,9 @@ export function setProp(el: Element, name: string, next: any, prev: any, isSvg: 
         }
         return;
     }
-    if (name === 'className' && !isSvg) {
+    if (name === 'className' && !isSvg && next != null) {
         ;
-        (el as HTMLElement).className = next == null ? '' : '' + next;
+        (el as HTMLElement).className = '' + next;
         return;
     }
     if (name === 'style') {

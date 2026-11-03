@@ -10,7 +10,10 @@ it('preserves string values for class and for aliases, including SVG', () => {
       setProp(el, name, true, false, svg)
       expect(el.getAttribute(attribute)).toBe('true')
       setProp(el, name, null, true, svg)
-      expect(el.getAttribute(attribute)).toBe(name === 'className' && !svg ? '' : null)
+      expect(el.getAttribute(attribute)).toBe(null)
+      setProp(el, name, 'x', null, svg)
+      setProp(el, name, undefined, 'x', svg)
+      expect(el.getAttribute(attribute)).toBe(null)
     }
   }
 })
