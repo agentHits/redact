@@ -187,3 +187,14 @@ it('retains hoisted document metadata when root hydration must recover', () => {
   expect(errors).toEqual([])
   root.unmount()
 })
+
+it('leaves a same-name meta inserted before hydration alone when media differs', () => {
+  const light = '(prefers-color-scheme: light)', dark = '(prefers-color-scheme: dark)'
+  const doc = new DOMParser().parseFromString(`<!doctype html><html><head><meta name="theme-color" content="#ffffff" data-active=""><meta name="theme-color" content="#ffffff" media="${light}"><meta name="theme-color" content="#000000" media="${dark}"></head><body><main>App</main></body></html>`, 'text/html')
+  const metas = () => [...doc.querySelectorAll('meta')].map(meta => meta.outerHTML)
+  const before = metas(), error = vi.fn()
+  const root = hydrateRoot(doc, <html><head><meta name="theme-color" content="#ffffff" media={light} /><meta name="theme-color" content="#000000" media={dark} /></head><body><main>App</main></body></html>, { onRecoverableError: error, onUncaughtError: error })
+  expect(error).not.toHaveBeenCalled()
+  expect(metas()).toEqual(before)
+  root.unmount()
+})

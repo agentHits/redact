@@ -73,7 +73,7 @@ export class HydrationCursor {
  * Position-insensitive lookup for head/html adoption. Scans forward past
  * non-matching nodes without removing them, matching by tag AND the key
  * attributes that identify head elements uniquely (rel/href for links,
- * name/property for meta, src for script). Non-matching nodes stay in
+ * name/property/media for meta, src for script). Non-matching nodes stay in
  * place so the SSR'd stylesheet/script order is preserved.
  */
 function findMetadata(parent: Node | undefined, tag: string, props: Record<string, any>, fallback?: Node): ChildNode | null {
@@ -129,7 +129,7 @@ export function beginHydration(root: FiberRoot): void {
 // Head elements that we match against server DOM by attribute signature.
 const HEAD_KEY_ATTRS: Record<string, ReadonlyArray<string>> = {
     link: ['rel', 'href', 'sizes', 'type'],
-    meta: ['name', 'property', 'charSet', 'httpEquiv'],
+    meta: ['name', 'property', 'media', 'charSet', 'httpEquiv'],
     script: ['src', 'type'],
     style: ['id', 'media', 'nonce', 'title'],
 };
